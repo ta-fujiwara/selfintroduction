@@ -222,7 +222,7 @@ header h1 {
   }
 }
 header p {
-  font-size: 1.2rem; /* 通常のフォントサイズ */
+  font-size: 1.1rem; /* 通常のフォントサイズ */
   white-space: nowrap; /* 改行を防ぐ */
   overflow: hidden; /* はみ出しを防止 */
   margin: 0;
