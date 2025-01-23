@@ -51,33 +51,52 @@ header p {
 }
 
 /* ナビゲーションメニューのスタイル */
-.nav-links {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-  margin: 10px 0;
-  overflow: hidden; /* 必要に応じてはみ出しを防止 */
+nav {
+  display: flex; /* 横並びにする */
+  justify-content: center; /* 中央揃え */
+  gap: 20px; /* 各リンクの間隔を設定 */
+  padding: 10px 0;
+  background-color: #333; /* 背景色 */
 }
 
-.nav-links li {
-  margin: 5px 10px;
+/* ナビゲーションリンク */
+nav a {
+  color: #fff; /* テキストの色 */
+  text-decoration: none; /* 下線を削除 */
+  font-size: 1rem; /* フォントサイズ */
+  padding: 5px 10px; /* クリックしやすいように余白を追加 */
   white-space: nowrap; /* 改行を防ぐ */
+  overflow: hidden; /* はみ出し防止 */
+  text-overflow: ellipsis; /* はみ出たら「...」 */
 }
 
-.nav-links a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1rem;
-  padding: 5px 10px;
-  white-space: nowrap; /* 改行を防ぐ */
-  overflow: hidden; /* 必要に応じて文字がはみ出ないようにする */
-  text-overflow: ellipsis; /* はみ出た場合に「...」を表示 */
+/* ホバー時のスタイル */
+nav a:hover {
+  background-color: #0056b3; /* 背景色変更 */
+  border-radius: 5px; /* 角を丸くする */
 }
 
-.nav-links a:hover {
-  background-color: #0056b3;
-  border-radius: 5px;
+/* スマホ向けのレスポンシブ対応 */
+@media (max-width: 768px) {
+  nav {
+    flex-wrap: wrap; /* 折り返しを許可 */
+    gap: 10px; /* 間隔を調整 */
+  }
+
+  nav a {
+    font-size: 0.9rem; /* フォントサイズを縮小 */
+  }
+}
+
+@media (max-width: 480px) {
+  nav {
+    flex-direction: column; /* 縦並びに変更 */
+    align-items: center; /* 中央揃え */
+  }
+
+  nav a {
+    font-size: 0.8rem; /* さらにフォントサイズを縮小 */
+  }
 }
 
 /* メディアクエリでレスポンシブ対応 */
@@ -123,31 +142,6 @@ header p {
 }
 
   font-size: 1.2rem;
-}
-
-/* ナビゲーション */
-nav {
-  background-color: #333;
-}
-
-.nav-links {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-}
-
-.nav-links li {
-  margin: 0 15px;
-}
-
-.nav-links a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
 }
 
 /* 各セクション */
