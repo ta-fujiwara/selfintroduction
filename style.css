@@ -28,6 +28,70 @@ header h1 {
 }
 
 header p {
+
+  /* ヘッダーのスタイル */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* 小さい画面でも中央揃え */
+  text-align: center;
+  padding: 20px;
+  background-color: #007BFF;
+  color: #fff;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+header p {
+  font-size: 1.2rem;
+}
+
+/* ナビゲーションメニュー（レスポンシブ対応） */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  flex-wrap: wrap; /* 画面が小さい場合は折り返す */
+}
+
+.nav-links li {
+  margin: 5px 10px;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 5px 10px;
+}
+
+.nav-links a:hover {
+  background-color: #0056b3;
+  border-radius: 5px;
+}
+
+/* メディアクエリでレスポンシブ対応 */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.5rem; /* タイトルを小さめに */
+  }
+
+  header p {
+    font-size: 1rem;
+  }
+
+  .nav-links a {
+    font-size: 0.9rem; /* メニューリンクを小さく */
+    padding: 5px 8px;
+  }
+}
+
   font-size: 1.2rem;
 }
 
