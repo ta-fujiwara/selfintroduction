@@ -170,3 +170,25 @@ footer {
   color: #fff;
   font-size: 0.9rem;
 }
+
+/* ヘッダーのスタイル */
+header h1 {
+  font-size: 2rem;
+  white-space: nowrap; /* 改行を防ぐ */
+  overflow: hidden; /* 必要に応じて文字がはみ出ないようにする */
+  text-overflow: ellipsis; /* 文字がはみ出た場合に「...」を表示 */
+  margin-bottom: 10px;
+}
+
+/* スマホ向け: 画面サイズに応じて文字サイズを調整 */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.5rem; /* 小さい画面ではフォントサイズを縮小 */
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.2rem; /* スマホ画面ではさらに小さく */
+  }
+}
