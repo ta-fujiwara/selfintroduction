@@ -206,7 +206,6 @@ header h1 {
   font-size: 2rem;
   white-space: nowrap; /* 改行を防ぐ */
   overflow: hidden; /* 必要に応じて文字がはみ出ないようにする */
-  text-overflow: ellipsis; /* 文字がはみ出た場合に「...」を表示 */
   margin-bottom: 10px;
 }
 
@@ -221,4 +220,10 @@ header h1 {
   header h1 {
     font-size: 1.2rem; /* スマホ画面ではさらに小さく */
   }
+}
+header p {
+  font-size: 1.2rem; /* 通常のフォントサイズ */
+  white-space: nowrap; /* 改行を防ぐ */
+  overflow: hidden; /* はみ出しを防止 */
+  margin: 0;
 }
