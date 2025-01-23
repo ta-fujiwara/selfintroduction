@@ -50,18 +50,19 @@ header p {
   font-size: 1.2rem;
 }
 
-/* ナビゲーションメニュー（レスポンシブ対応） */
+/* ナビゲーションメニューのスタイル */
 .nav-links {
   display: flex;
   justify-content: center;
   list-style: none;
   padding: 0;
   margin: 10px 0;
-  flex-wrap: wrap; /* 画面が小さい場合は折り返す */
+  overflow: hidden; /* 必要に応じてはみ出しを防止 */
 }
 
 .nav-links li {
   margin: 5px 10px;
+  white-space: nowrap; /* 改行を防ぐ */
 }
 
 .nav-links a {
@@ -69,12 +70,41 @@ header p {
   text-decoration: none;
   font-size: 1rem;
   padding: 5px 10px;
+  white-space: nowrap; /* 改行を防ぐ */
+  overflow: hidden; /* 必要に応じて文字がはみ出ないようにする */
+  text-overflow: ellipsis; /* はみ出た場合に「...」を表示 */
 }
 
 .nav-links a:hover {
   background-color: #0056b3;
   border-radius: 5px;
 }
+
+/* メディアクエリでレスポンシブ対応 */
+@media (max-width: 768px) {
+  .nav-links {
+    flex-wrap: wrap; /* 画面が狭くなったらメニューを折り返す */
+    justify-content: space-around; /* 均等配置 */
+  }
+
+  .nav-links a {
+    font-size: 0.9rem; /* 小さい画面では文字サイズを縮小 */
+    padding: 5px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links {
+    flex-direction: column; /* さらに狭い画面では縦並びにする */
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem; /* 文字をさらに縮小 */
+    padding: 10px;
+  }
+}
+
 
 /* メディアクエリでレスポンシブ対応 */
 @media (max-width: 768px) {
