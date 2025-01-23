@@ -52,22 +52,9 @@ header p {
 
 /* ナビゲーションメニューのスタイル */
 nav {
-  display: flex; /* 横並びにする */
   justify-content: center; /* 中央揃え */
-  gap: 20px; /* 各リンクの間隔を設定 */
   padding: 10px 0;
   background-color: #333; /* 背景色 */
-}
-
-/* ナビゲーションリンク */
-nav a {
-  color: #fff; /* テキストの色 */
-  text-decoration: none; /* 下線を削除 */
-  font-size: 1rem; /* フォントサイズ */
-  padding: 5px 10px; /* クリックしやすいように余白を追加 */
-  white-space: nowrap; /* 改行を防ぐ */
-  overflow: hidden; /* はみ出し防止 */
-  text-overflow: ellipsis; /* はみ出たら「...」 */
 }
 
 /* ホバー時のスタイル */
