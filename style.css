@@ -43,13 +43,13 @@ nav {
 }
 
 .nav-links li {
-  margin: 0 15px;
+  margin: 0 30px;
 }
 
 .nav-links a {
   color: #fff;
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
 }
 
 .nav-links a:hover {
