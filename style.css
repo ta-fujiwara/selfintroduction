@@ -55,7 +55,7 @@ nav {
   justify-content: center;
   gap: 20px;
   padding: 10px 0; /* 上下に余白を設定 */
-  background-color: 00B5F0; /* 背景色 */
+  background-color: 00b5f0; /* 背景色 */
 }
 
 /* ホバー時のスタイル */
