@@ -161,8 +161,8 @@
             height: 500px;
         }
         .plane-icon {
-            width: 30px;
-            height: 30px;
+            width: 100px;
+            height: 100px;
         }
     </style>
 </head>
@@ -188,7 +188,7 @@
         const planeIcon = L.divIcon({
             className: 'plane-icon',
             html: '✈️',
-            iconSize: [100, 100]
+            iconSize: [30, 30]
         });
 
         const planeMarker = L.marker(singapore, { icon: planeIcon }).addTo(map);
