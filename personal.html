@@ -161,12 +161,13 @@
             height: 500px;
         }
         .plane-icon {
-            width: 250px;
-            height: 250px;
+            width: 50px;  /* サイズを大きく */
+            height: 50px; /* サイズを大きく */
         }
     </style>
 </head>
 <body>
+    <h1>Plane Animation: Singapore to Japan</h1>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -188,7 +189,7 @@
         const planeIcon = L.divIcon({
             className: 'plane-icon',
             html: '✈️',
-            iconSize: [30, 30]
+            iconSize: [50, 50]  // アイコンのサイズを50x50に変更
         });
 
         const planeMarker = L.marker(singapore, { icon: planeIcon }).addTo(map);
@@ -211,6 +212,7 @@
     </script>
 </body>
 </html>
+
 
 <p></p>
 
