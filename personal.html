@@ -148,6 +148,71 @@
 <p></p>
 
 <h4>行った場所</h4>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flying Plane Animation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 500px;
+        }
+        .plane-icon {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Plane Animation: Singapore to Japan</h1>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // 1. 地図を初期化
+        const map = L.map('map').setView([20, 120], 4); // 中心座標とズームレベル
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 2. シンガポールと日本の座標
+        const singapore = [1.3521, 103.8198];
+        const japan = [35.6895, 139.6917];
+
+        // 3. 線を描画
+        const route = L.polyline([singapore, japan], { color: 'blue' }).addTo(map);
+
+        // 4. 飛行機アイコンを追加
+        const planeIcon = L.divIcon({
+            className: 'plane-icon',
+            html: '✈️',
+            iconSize: [30, 30]
+        });
+
+        const planeMarker = L.marker(singapore, { icon: planeIcon }).addTo(map);
+
+        // 5. 飛行機アニメーション
+        let progress = 0; // 進行状況 (0～1)
+        function animatePlane() {
+            if (progress > 1) return; // アニメーション終了
+            progress += 0.005; // 速度調整
+
+            // 座標の補間
+            const lat = singapore[0] + (japan[0] - singapore[0]) * progress;
+            const lng = singapore[1] + (japan[1] - singapore[1]) * progress;
+
+            planeMarker.setLatLng([lat, lng]); // 飛行機の位置を更新
+            requestAnimationFrame(animatePlane); // 次のフレームを実行
+        }
+
+        animatePlane(); // アニメーション開始
+    </script>
+</body>
+</html>
+
 <p></p>
 
 <h4>感動した場面</h4>
