@@ -169,8 +169,8 @@
             height: 500px;
         }
         .plane-icon {
-            width: 50px;  /* サイズを大きく */
-            height: 50px; /* サイズを大きく */
+            width: 100px;  /* サイズを大きく */
+            height: 100px; /* サイズを大きく */
         }
     </style>
 </head>
@@ -197,7 +197,7 @@
         const planeIcon = L.divIcon({
             className: 'plane-icon',
             html: '✈️',
-            iconSize: [50, 50]  // アイコンのサイズを50x50に変更
+            iconSize: [100, 100]  // アイコンのサイズを50x50に変更
         });
 
         const planeMarker = L.marker(singapore, { icon: planeIcon }).addTo(map);
