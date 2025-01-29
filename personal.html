@@ -175,6 +175,7 @@
 <br>
 
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -211,28 +212,32 @@
         const planeMarker = L.marker([35.7719, 140.3929], { icon: planeIcon }).addTo(map);
 
         const routes = [
-            { from: [35.7719, 140.3929], to: [13.7563, 100.5018] },
-            { from: [13.7563, 100.5018], to: [1.3521, 103.8198] },
-            { from: [1.3521, 103.8198], to: [35.5533, 139.7811] }
+            { from: [35.7719, 140.3929], to: [13.7563, 100.5018], rotate180: true },  // 成田 → バンコク（180度回転）
+            { from: [13.7563, 100.5018], to: [1.3521, 103.8198], rotate180: false }, // バンコク → シンガポール
+            { from: [1.3521, 103.8198], to: [35.5533, 139.7811], rotate180: false }  // シンガポール → 羽田（デフォルト向き）
         ];
 
         let polylines = [];
 
-        // 進行方向を計算する関数
-        function calculateAngle(from, to) {
-            return Math.atan2(to[0] - from[0], to[1] - from[1]) * 180 / Math.PI;
-        }
-
-        // アイコンを進行方向に回転させる関数
-        function setPlaneRotation(planeMarker, from, to) {
-            const angle = calculateAngle(from, to);
-            planeMarker.setIcon(L.divIcon({
-                className: 'plane-icon',
-                html: '✈️',
-                iconSize: [50, 50],
-                iconAnchor: [25, 25],
-                iconAngle: angle // 進行方向に回転
-            }));
+        // アイコンの回転設定
+        function setPlaneRotation(planeMarker, rotate180 = false) {
+            if (rotate180) {
+                planeMarker.setIcon(L.divIcon({
+                    className: 'plane-icon',
+                    html: '✈️',
+                    iconSize: [50, 50],
+                    iconAnchor: [25, 25],
+                    iconAngle: 180  // 180度回転
+                }));
+            } else {
+                planeMarker.setIcon(L.divIcon({
+                    className: 'plane-icon',
+                    html: '✈️',
+                    iconSize: [50, 50],
+                    iconAnchor: [25, 25],
+                    iconAngle: 0  // デフォルトの向き
+                }));
+            }
         }
 
         function animatePlane(routeIndex = 0, progress = 0, path = []) {
@@ -240,14 +245,15 @@
 
             const from = routes[routeIndex].from;
             const to = routes[routeIndex].to;
+            const rotate180 = routes[routeIndex].rotate180;
 
             const lat = from[0] + (to[0] - from[0]) * progress;
             const lng = from[1] + (to[1] - from[1]) * progress;
 
             planeMarker.setLatLng([lat, lng]);
 
-            // 進行方向にアイコンを回転
-            setPlaneRotation(planeMarker, from, to);
+            // アイコンの回転設定
+            setPlaneRotation(planeMarker, rotate180);
 
             path.push([lat, lng]);
 
@@ -271,6 +277,7 @@
     </script>
 </body>
 </html>
+
 
 
 
