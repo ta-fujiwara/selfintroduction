@@ -248,7 +248,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>飛行機のアニメーション（向きを変えない）</title>
+    <title>飛行機のアニメーション（線を後付け）</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map {
@@ -258,7 +258,7 @@
     </style>
 </head>
 <body>
-    <h1>飛行機のアニメーション（向きを変えない）</h1>
+    <h1>飛行機のアニメーション（線を後付け）</h1>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -282,9 +282,7 @@
 
         const planeMarker = L.marker(routes[0].from, { icon: planeIcon }).addTo(map);
 
-        let currentPath = [];
-
-        function animatePlane(routeIndex = 0, progress = 0) {
+        function animatePlane(routeIndex = 0, progress = 0, path = []) {
             if (routeIndex >= routes.length) return;
 
             const from = routes[routeIndex].from;
@@ -294,18 +292,16 @@
             const lng = from[1] + (to[1] - from[1]) * progress;
 
             planeMarker.setLatLng([lat, lng]);
-            currentPath.push([lat, lng]);
-            L.polyline(currentPath, { color: '#66ccff', weight: 3 }).addTo(map);
+            path.push([lat, lng]);
 
             progress += 0.005;
 
             if (progress <= 1) {
-                requestAnimationFrame(() => animatePlane(routeIndex, progress));
+                requestAnimationFrame(() => animatePlane(routeIndex, progress, path));
             } else {
-                setTimeout(() => {
-                    currentPath = [to];
-                    animatePlane(routeIndex + 1, 0);
-                }, 1000);
+                // 移動が完了した後に線を描画
+                L.polyline(path, { color: '#66ccff', weight: 3 }).addTo(map);
+                setTimeout(() => animatePlane(routeIndex + 1, 0, []), 1000);
             }
         }
 
