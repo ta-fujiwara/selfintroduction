@@ -178,7 +178,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>飛行機アイコン（絵文字）</title>
+    <title>飛行機のアニメーション</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map {
@@ -191,7 +191,7 @@
     </style>
 </head>
 <body>
-    <h1>飛行機アイコン（絵文字）確認</h1>
+    <h1>飛行機のアニメーション</h1>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -209,13 +209,43 @@
             iconSize: [50, 50]  // アイコンのサイズを設定
         });
 
-        // 飛行機マーカーの追加
-        L.marker([35.7719, 140.3929], { icon: planeIcon }).addTo(map)
-            .bindPopup("飛行機アイコン")
-            .openPopup();
+        // 飛行機マーカー
+        const planeMarker = L.marker([35.7719, 140.3929], { icon: planeIcon }).addTo(map);
+
+        // ルートを指定（成田 → バンコク → シンガポール → 羽田）
+        const routes = [
+            { from: [35.7719, 140.3929], to: [13.7563, 100.5018] }, // 成田 → バンコク
+            { from: [13.7563, 100.5018], to: [1.3521, 103.8198] },  // バンコク → シンガポール
+            { from: [1.3521, 103.8198], to: [35.5533, 139.7811] }   // シンガポール → 羽田
+        ];
+
+        // アニメーション関数
+        function animatePlane(routeIndex = 0, progress = 0) {
+            if (routeIndex >= routes.length) return; // すべてのルートを完了したら終了
+
+            const from = routes[routeIndex].from;
+            const to = routes[routeIndex].to;
+
+            // 現在の座標を線形補間
+            const lat = from[0] + (to[0] - from[0]) * progress;
+            const lng = from[1] + (to[1] - from[1]) * progress;
+
+            planeMarker.setLatLng([lat, lng]); // 飛行機の位置を更新
+
+            progress += 0.005; // 速度調整
+
+            if (progress <= 1) {
+                requestAnimationFrame(() => animatePlane(routeIndex, progress)); // 継続的にアニメーション
+            } else {
+                setTimeout(() => animatePlane(routeIndex + 1, 0), 1000); // 次のルートへ
+            }
+        }
+
+        animatePlane(); // アニメーション開始
     </script>
 </body>
 </html>
+
 
 
 
@@ -225,7 +255,9 @@
 
 <h4>次行く予定の場所</h4>
 <p>来年2026年は3月にWBC、6月からワールドカップがあります。</p>
-<p>どちらもアメリカですが、両方行けたらなと思っているのでその分今年は控えねばと考えております。</p>
+<p>どちらもアメリカですが、両方行きたいと思っているのでその分今年は控えねばと考えております。</p>
+<p></p>
+
 
 <a href="index.html">TOPに戻る</a>        
 </div>
