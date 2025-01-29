@@ -217,6 +217,23 @@
 
         let polylines = [];
 
+        // 進行方向を計算する関数
+        function calculateAngle(from, to) {
+            return Math.atan2(to[0] - from[0], to[1] - from[1]) * 180 / Math.PI;
+        }
+
+        // アイコンを進行方向に回転させる関数
+        function setPlaneRotation(planeMarker, from, to) {
+            const angle = calculateAngle(from, to);
+            planeMarker.setIcon(L.divIcon({
+                className: 'plane-icon',
+                html: '✈️',
+                iconSize: [50, 50],
+                iconAnchor: [25, 25],
+                iconAngle: angle
+            }));
+        }
+
         function animatePlane(routeIndex = 0, progress = 0, path = []) {
             if (routeIndex >= routes.length) return;
 
@@ -246,17 +263,6 @@
             } else {
                 setTimeout(() => animatePlane(routeIndex + 1, 0, [to]), 1000);
             }
-        }
-
-        function setPlaneRotation(planeMarker, from, to) {
-            const angle = Math.atan2(to[0] - from[0], to[1] - from[1]) * 180 / Math.PI;
-            planeMarker.setIcon(L.divIcon({
-                className: 'plane-icon',
-                html: '✈️',
-                iconSize: [50, 50],
-                iconAnchor: [25, 25],
-                iconAngle: angle
-            }));
         }
 
         animatePlane();
