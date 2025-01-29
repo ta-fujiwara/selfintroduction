@@ -209,3 +209,7 @@ header p {
   overflow: hidden; /* はみ出しを防止 */
   margin: 0;
 }
+#map {
+    width: 100%;
+    height: 50vh; /* ビュー高さの50%を使用 */
+}
