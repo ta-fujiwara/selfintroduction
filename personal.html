@@ -195,10 +195,23 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        const map = L.map('map').setView([25, 105], 3); 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
+          // 画面サイズによってセットする地図の中心とズームレベルを設定
+    const isMobile = window.innerWidth <= 768;  // スマホ判定（768px以下）
+
+    const map = L.map('map', {
+        center: isMobile ? [20, 110] : [35.7719, 140.3929], // モバイルは広域、PCは成田中心
+        zoom: isMobile ? 3.5 : 5  // モバイルは広域、PCは少しズームイン
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // 画面サイズ変更時に地図を更新
+    window.addEventListener('resize', function() {
+        const isMobile = window.innerWidth <= 768;
+        map.setView(isMobile ? [20, 110] : [35.7719, 140.3929], isMobile ? 3.5 : 5);
+    });
 
         const planeIcon = L.divIcon({
             className: 'plane-icon',
