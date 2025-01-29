@@ -173,85 +173,17 @@
 <br>
 <br>
 <br>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>飛行機のアニメーション</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        #map {
-            width: 100%;
-            height: 600px;
-        }
-        .plane-icon {
-            font-size: 30px;
-        }
-    </style>
-</head>
-<body>
-    <h1>飛行機のアニメーション</h1>
-    <div id="map"></div>
+<script>
+    // 飛行機アイコン（画像バージョン）
+    const planeIcon = L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/69/69840.png', // 飛行機画像
+        iconSize: [50, 50],
+        iconAnchor: [25, 25]
+    });
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        // 1. 地図の初期化（より広域を表示）
-        const map = L.map('map').setView([20, 110], 3.5); 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
-
-        // 2. ルート（成田 → バンコク → シンガポール → 羽田）
-        const routes = [
-            { from: [35.7719, 140.3929], to: [13.7563, 100.5018] }, // 成田 → バンコク
-            { from: [13.7563, 100.5018], to: [1.3521, 103.8198] },  // バンコク → シンガポール
-            { from: [1.3521, 103.8198], to: [35.5533, 139.7811] }   // シンガポール → 羽田
-        ];
-
-        // 3. 飛行機アイコン
-        const planeIcon = L.divIcon({
-            className: 'plane-icon',
-            html: '✈️',
-            iconSize: [40, 40]
-        });
-
-        // 4. 飛行機マーカー
-        const planeMarker = L.marker(routes[0].from, { icon: planeIcon }).addTo(map);
-
-        // 5. 飛行機の軌跡（後から表示）
-        let polylines = [];
-
-        function animatePlane(routeIndex = 0, progress = 0, path = []) {
-            if (routeIndex >= routes.length) return; // すべてのルートを完了したら終了
-
-            const from = routes[routeIndex].from;
-            const to = routes[routeIndex].to;
-
-            // 現在の座標を線形補間
-            const lat = from[0] + (to[0] - from[0]) * progress;
-            const lng = from[1] + (to[1] - from[1]) * progress;
-
-            planeMarker.setLatLng([lat, lng]); // 飛行機の位置を更新
-
-            path.push([lat, lng]); // 現在位置を軌跡に追加
-
-            progress += 0.005; // 速度調整
-
-            if (progress <= 1) {
-                requestAnimationFrame(() => animatePlane(routeIndex, progress, path));
-            } else {
-                // 飛行機が目的地に着いたら軌跡を表示
-                const polyline = L.polyline(path, { color: 'blue', weight: 3 }).addTo(map);
-                polylines.push(polyline); // 保存
-                setTimeout(() => animatePlane(routeIndex + 1, 0, [to]), 1000); // 次のルートへ
-            }
-        }
-
-        animatePlane(); // アニメーション開始
-    </script>
-</body>
-</html>
+    // 飛行機マーカー（アイコン変更）
+    const planeMarker = L.marker(routes[0].from, { icon: planeIcon }).addTo(map);
+</script>
 
 
 <p></p>
