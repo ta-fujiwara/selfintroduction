@@ -199,7 +199,7 @@
     const isMobile = window.innerWidth <= 768;  // スマホ判定（768px以下）
 
     const map = L.map('map', {
-        center: isMobile ? [20, 110] 3.5: [35.7719, 140.3929], // モバイルは広域、PCは成田中心
+        center: isMobile ? [20, 110] : [35.7719, 140.3929], // モバイルは広域、PCは成田中心
         zoom: isMobile ? 3.5 : 5  // モバイルは広域、PCは少しズームイン
     });
 
@@ -210,7 +210,7 @@
     // 画面サイズ変更時に地図を更新
     window.addEventListener('resize', function() {
         const isMobile = window.innerWidth <= 768;
-        map.setView(isMobile ? [20, 110] 3.5: [35.7719, 140.3929], isMobile ? 3.5 : 5);
+        map.setView(isMobile ? [20, 110] : [35.7719, 140.3929], isMobile ? 3.5 : 5);
     });
 
         const planeIcon = L.divIcon({
