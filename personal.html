@@ -178,7 +178,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>飛行機のアニメーション（向きを変えない）</title>
+    <title>飛行機アイコンの確認</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map {
@@ -188,21 +188,15 @@
     </style>
 </head>
 <body>
-    <h1>飛行機のアニメーション（向きを変えない）</h1>
+    <h1>飛行機アイコンの確認</h1>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        const map = L.map('map').setView([20, 110], 4);
+        const map = L.map('map').setView([35.7719, 140.3929], 5); // 成田空港を表示
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
-
-        const routes = [
-            { from: [35.7719, 140.3929], to: [13.7563, 100.5018] },
-            { from: [13.7563, 100.5018], to: [1.3521, 103.8198] },
-            { from: [1.3521, 103.8198], to: [35.5533, 139.7811] }
-        ];
 
         const planeIcon = L.icon({
             iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Airplane_silhouette.svg',
@@ -210,108 +204,12 @@
             iconAnchor: [25, 25]
         });
 
-        const planeMarker = L.marker(routes[0].from, { icon: planeIcon }).addTo(map);
-
-        let currentPath = [];
-
-        function animatePlane(routeIndex = 0, progress = 0) {
-            if (routeIndex >= routes.length) return;
-
-            const from = routes[routeIndex].from;
-            const to = routes[routeIndex].to;
-
-            const lat = from[0] + (to[0] - from[0]) * progress;
-            const lng = from[1] + (to[1] - from[1]) * progress;
-
-            planeMarker.setLatLng([lat, lng]);
-            currentPath.push([lat, lng]);
-            L.polyline(currentPath, { color: '#66ccff', weight: 3 }).addTo(map);
-
-            progress += 0.005;
-
-            if (progress <= 1) {
-                requestAnimationFrame(() => animatePlane(routeIndex, progress));
-            } else {
-                setTimeout(() => {
-                    currentPath = [to];
-                    animatePlane(routeIndex + 1, 0);
-                }, 1000);
-            }
-        }
-
-        animatePlane();
+        L.marker([35.7719, 140.3929], { icon: planeIcon }).addTo(map) // 成田空港にマーカーを表示
+            .bindPopup("飛行機アイコン")
+            .openPopup();
     </script>
 </body>
 </html>
-あああああ
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>飛行機のアニメーション（線を後付け）</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        #map {
-            width: 100%;
-            height: 600px;
-        }
-    </style>
-</head>
-<body>
-    <h1>飛行機のアニメーション（線を後付け）</h1>
-    <div id="map"></div>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        const map = L.map('map').setView([20, 110], 4);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
-
-        const routes = [
-            { from: [35.7719, 140.3929], to: [13.7563, 100.5018] },
-            { from: [13.7563, 100.5018], to: [1.3521, 103.8198] },
-            { from: [1.3521, 103.8198], to: [35.5533, 139.7811] }
-        ];
-
-        const planeIcon = L.icon({
-            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Airplane_silhouette.svg',
-            iconSize: [50, 50],
-            iconAnchor: [25, 25]
-        });
-
-        const planeMarker = L.marker(routes[0].from, { icon: planeIcon }).addTo(map);
-
-        function animatePlane(routeIndex = 0, progress = 0, path = []) {
-            if (routeIndex >= routes.length) return;
-
-            const from = routes[routeIndex].from;
-            const to = routes[routeIndex].to;
-
-            const lat = from[0] + (to[0] - from[0]) * progress;
-            const lng = from[1] + (to[1] - from[1]) * progress;
-
-            planeMarker.setLatLng([lat, lng]);
-            path.push([lat, lng]);
-
-            progress += 0.005;
-
-            if (progress <= 1) {
-                requestAnimationFrame(() => animatePlane(routeIndex, progress, path));
-            } else {
-                // 移動が完了した後に線を描画
-                L.polyline(path, { color: '#66ccff', weight: 3 }).addTo(map);
-                setTimeout(() => animatePlane(routeIndex + 1, 0, []), 1000);
-            }
-        }
-
-        animatePlane();
-    </script>
-</body>
-</html>
-
-
 
 
 <p></p>
