@@ -178,7 +178,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>飛行機のアニメーション（リアルタイム線）</title>
+    <title>飛行機のアニメーション（進行方向回転＋リアルタイム線）</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map {
@@ -191,7 +191,7 @@
     </style>
 </head>
 <body>
-    <h1>飛行機のアニメーション（リアルタイム線）</h1>
+    <h1>飛行機のアニメーション（進行方向回転＋リアルタイム線）</h1>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -228,6 +228,9 @@
 
             planeMarker.setLatLng([lat, lng]);
 
+            // 進行方向にアイコンを回転
+            setPlaneRotation(planeMarker, from, to);
+
             path.push([lat, lng]);
 
             // 線をリアルタイムで描画
@@ -245,36 +248,22 @@
             }
         }
 
+        function setPlaneRotation(planeMarker, from, to) {
+            const angle = Math.atan2(to[0] - from[0], to[1] - from[1]) * 180 / Math.PI;
+            planeMarker.setIcon(L.divIcon({
+                className: 'plane-icon',
+                html: '✈️',
+                iconSize: [50, 50],
+                iconAnchor: [25, 25],
+                iconAngle: angle
+            }));
+        }
+
         animatePlane();
     </script>
 </body>
 </html>
 
-// 進行方向にアイコンを回転させる関数
-function setPlaneRotation(planeMarker, from, to) {
-    const angle = Math.atan2(to[0] - from[0], to[1] - from[1]) * 180 / Math.PI;
-    planeMarker.setIcon(L.divIcon({
-        className: 'plane-icon',
-        html: '✈️',
-        iconSize: [50, 50],
-        iconAnchor: [25, 25],
-        // 飛行機アイコンを進行方向に回転させる
-        iconAngle: angle
-    }));
-}
-
-// 進行方向にアイコンを回転させる関数
-function setPlaneRotation(planeMarker, from, to) {
-    const angle = Math.atan2(to[0] - from[0], to[1] - from[1]) * 180 / Math.PI;
-    planeMarker.setIcon(L.divIcon({
-        className: 'plane-icon',
-        html: '✈️',
-        iconSize: [50, 50],
-        iconAnchor: [25, 25],
-        // 飛行機アイコンを進行方向に回転させる
-        iconAngle: angle
-    }));
-}
 
 
 
@@ -286,7 +275,7 @@ function setPlaneRotation(planeMarker, from, to) {
 <p>来年2026年は3月にWBC、6月からワールドカップがあります。</p>
 <p>どちらもアメリカですが、両方行きたいと思っているのでその分今年は控えねばと考えております。</p>
 <p>WBCは前回2023年は東京ラウンドは5試合全部行ったのですが、やはり最後のアメリカラウンドを見たい(前回みたいに決勝までいけるかわからんけど)。</p>
-<p>ワールドカップは前回の三笘の1ミリやナナフゥンを現地で見てしまったのでリピートせずにはいられないと</p>
+<p>ワールドカップは前回の三笘の1ミリやナナフゥンを現地で見てしまったのでリピートせずにはいられないところです。</p>
 
 
 <a href="index.html">TOPに戻る</a>        
