@@ -195,12 +195,12 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-          // 画面サイズによってセットする地図の中心とズームレベルを設定
+    // 画面サイズによってセットする地図の中心とズームレベルを設定
     const isMobile = window.innerWidth <= 768;  // スマホ判定（768px以下）
 
     const map = L.map('map', {
-        center: isMobile ? [20, 110] : [35.7719, 140.3929], // モバイルは広域、PCは成田中心
-        zoom: isMobile ? 3.5 : 5  // モバイルは広域、PCは少しズームイン
+        center: [20, 110],  // モバイルとPC両方で同じ中心
+        zoom: isMobile ? 3.0 : 3.5  // モバイルはさらに広域（ズームレベル 3.0）、PCは 3.5
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -210,7 +210,7 @@
     // 画面サイズ変更時に地図を更新
     window.addEventListener('resize', function() {
         const isMobile = window.innerWidth <= 768;
-        map.setView(isMobile ? [20, 110] : [35.7719, 140.3929], isMobile ? 3.5 : 5);
+        map.setView([20, 110], isMobile ? 3.0 : 3.5);  // 画面のサイズに応じたズームレベル
     });
 
         const planeIcon = L.divIcon({
