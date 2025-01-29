@@ -211,5 +211,5 @@ header p {
 }
 #map {
     width: 100%;
-    height: 50vh; /* ビュー高さの50%を使用 */
+    height: calc(100vw * 9 / 16); /* 横幅の16:9の比率を維持 */
 }
