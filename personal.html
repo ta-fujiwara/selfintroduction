@@ -178,17 +178,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>飛行機アイコンの確認</title>
+    <title>飛行機アイコン（絵文字）</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map {
             width: 100%;
             height: 600px;
         }
+        .plane-icon {
+            font-size: 50px; /* アイコンのサイズ調整 */
+        }
     </style>
 </head>
 <body>
-    <h1>飛行機アイコンの確認</h1>
+    <h1>飛行機アイコン（絵文字）確認</h1>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -199,11 +202,11 @@
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        // 飛行機アイコン
-        const planeIcon = L.icon({
-            iconUrl: 'https://cdn-icons-png.flaticon.com/512/69/69840.png', // 飛行機画像
-            iconSize: [50, 50],
-            iconAnchor: [25, 25]
+        // 飛行機絵文字アイコン
+        const planeIcon = L.divIcon({
+            className: 'plane-icon',
+            html: '✈️',  // 飛行機絵文字
+            iconSize: [50, 50]  // アイコンのサイズを設定
         });
 
         // 飛行機マーカーの追加
@@ -217,10 +220,12 @@
 
 
 
+
 <p></p>
 
 <h4>次行く予定の場所</h4>
 <p>来年2026年は3月にWBC、6月からワールドカップがあります。</p>
+<p>どちらもアメリカですが、両方行けたらなと思っているのでその分今年は控えねばと考えております。</p>
 
 <a href="index.html">TOPに戻る</a>        
 </div>
