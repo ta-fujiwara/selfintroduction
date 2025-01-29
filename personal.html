@@ -148,22 +148,26 @@
 <p>業務委託期間中には都内で比較的混みにくい平日昼間を狙って行っておりました。</p>
 
 <h3>UFOキャッチャー</h3>
-<p>たまに乱獲しに行きます。お菓子は控えるようになってやめたので代わりに我が家のプーさんが12体を超えました。</p>
+<p>たまに乱獲しに行きます。お菓子は控えるようになってやめたので代わりに我が家のプーさんが増殖しました。</p>
 
 <h3>スポーツ</h3>
-<p>基本的にわりと好きですが、最近は走れなくなったので見る方が多くなりました。</p>
-<p></p>
+<p>基本的にわりと好きですが、最近は走れなくなったので見る方が多くなりました。やる方はジムでトレーニングしてるだけです(週1〜2)。</p>
+<p>野球は巨人、サッカーはバルセロナを応援しています。</p>
 
 <h3>旅行</h3>
-<p></p>
+<p>けっこう色んなところに行きました。多分30カ国ちょい。</p>
+<p>物価高＆円安もあるので最近はサウナを理由に国内を結構増やしています。</p>
 
-<h4>行った場所</h4>
+<h4>前日に行った場所</h4>
+<p>入社日が1/22での指定があったので、業務委託</p>
+<p></p>
+<p></p>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flying Plane Animation</title>
+    <title>飛行機のアニメーション</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map {
@@ -171,50 +175,65 @@
             height: 500px;
         }
         .plane-icon {
-            width: 100px;  /* サイズを大きく */
-            height: 100px; /* サイズを大きく */
+            font-size: 30px;
         }
     </style>
 </head>
 <body>
+    <h1>飛行機のアニメーション</h1>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. 地図を初期化
-        const map = L.map('map').setView([20, 120], 4); // 中心座標とズームレベル
+        // 1. 地図の初期化
+        const map = L.map('map').setView([15, 115], 4); // 中央位置とズームレベル
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        // 2. シンガポールと日本の座標
-        const singapore = [1.3521, 103.8198];
-        const japan = [35.6895, 139.6917];
+        // 2. ルート（成田 → バンコク → シンガポール → 東京）
+        const routes = [
+            { from: [35.7719, 140.3929], to: [13.7563, 100.5018] }, // 成田 → バンコク
+            { from: [13.7563, 100.5018], to: [1.3521, 103.8198] },  // バンコク → シンガポール
+            { from: [1.3521, 103.8198], to: [35.7719, 140.3929] }   // シンガポール → 成田
+        ];
 
-        // 3. 線を描画
-        const route = L.polyline([singapore, japan], { color: 'blue' }).addTo(map);
+        // 3. ルートを描画
+        routes.forEach(route => {
+            L.polyline([route.from, route.to], { color: 'blue', weight: 3 }).addTo(map);
+        });
 
-        // 4. 飛行機アイコンを追加
+        // 4. 飛行機アイコン
         const planeIcon = L.divIcon({
             className: 'plane-icon',
             html: '✈️',
-            iconSize: [100, 100]  // アイコンのサイズを50x50に変更
+            iconSize: [40, 40] // 飛行機アイコンのサイズ
         });
 
-        const planeMarker = L.marker(singapore, { icon: planeIcon }).addTo(map);
+        // 5. 飛行機マーカー
+        const planeMarker = L.marker(routes[0].from, { icon: planeIcon }).addTo(map);
 
-        // 5. 飛行機アニメーション
-        let progress = 0; // 進行状況 (0～1)
-        function animatePlane() {
-            if (progress > 1) return; // アニメーション終了
-            progress += 0.005; // 速度調整
+        // 6. 飛行機をアニメーションさせる関数
+        function animatePlane(routeIndex = 0, progress = 0) {
+            if (routeIndex >= routes.length) return; // すべてのルートを完了したら終了
 
-            // 座標の補間
-            const lat = singapore[0] + (japan[0] - singapore[0]) * progress;
-            const lng = singapore[1] + (japan[1] - singapore[1]) * progress;
+            const from = routes[routeIndex].from;
+            const to = routes[routeIndex].to;
+
+            // 線形補間で現在の座標を計算
+            const lat = from[0] + (to[0] - from[0]) * progress;
+            const lng = from[1] + (to[1] - from[1]) * progress;
 
             planeMarker.setLatLng([lat, lng]); // 飛行機の位置を更新
-            requestAnimationFrame(animatePlane); // 次のフレームを実行
+
+            // 進行度を増やす
+            progress += 0.005; // 速度調整
+
+            if (progress <= 1) {
+                requestAnimationFrame(() => animatePlane(routeIndex, progress)); // 継続
+            } else {
+                setTimeout(() => animatePlane(routeIndex + 1, 0), 1000); // 次のルートへ
+            }
         }
 
         animatePlane(); // アニメーション開始
@@ -222,14 +241,10 @@
 </body>
 </html>
 
-
-<p></p>
-
-<h4>感動した場面</h4>
 <p></p>
 
 <h4>次行く予定の場所</h4>
-<p></p>
+<p>来年のWBC、</p>
 
 <a href="index.html">TOPに戻る</a>        
 </div>
