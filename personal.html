@@ -173,17 +173,34 @@
 <br>
 <br>
 <br>
-<script>
-    // 飛行機アイコン（画像バージョン）
-    const planeIcon = L.icon({
-        iconUrl: 'https://cdn-icons-png.flaticon.com/512/69/69840.png', // 飛行機画像
-        iconSize: [50, 50],
-        iconAnchor: [25, 25]
-    });
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飛行機のアニメーション（地図のみ確認）</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>地図表示確認</h1>
+    <div id="map"></div>
 
-    // 飛行機マーカー（アイコン変更）
-    const planeMarker = L.marker(routes[0].from, { icon: planeIcon }).addTo(map);
-</script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([20, 110], 3.5); // 地図の中心を設定
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+    </script>
+</body>
+</html>
+
 
 
 <p></p>
