@@ -161,18 +161,17 @@
 <h4>入社前日に行った場所</h4>
 <p>入社日が1/22での指定がありましたので、業務委託の仕事を年明け初週に終わらせて出国し、入社前日に戻りました。</p>
 <p>さて、私はどこにいたでしょう？</p>
-<p>↓</p>
-<p>↓</p>
-<p>↓</p>
-<p>↓</p>
-<p>↓</p>
-<p>↓</p>
-<p>↓</p>
-<p>↓</p>
-<p>↓</p>
-<p>↓</p>
-<p>↓</p>
-<p>↓</p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p>↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓</p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -180,15 +179,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>飛行機のアニメーション</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
     <style>
         #map {
             width: 100%;
             height: 600px;
-        }
-        .plane-icon {
-            font-size: 60px; /* アイコンサイズを大きく */
-            display: inline-block;
-            transform-origin: center;
         }
     </style>
 </head>
@@ -199,7 +194,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // 1. 地図の初期化（広域表示）
-        const map = L.map('map').setView([20, 110], 3.5);
+        const map = L.map('map').setView([20, 110], 4);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
@@ -211,16 +206,15 @@
             { from: [1.3521, 103.8198], to: [35.5533, 139.7811] }   // シンガポール → 羽田
         ];
 
-        // 3. 飛行機アイコン（大きく、中央基準に）
-        const planeIcon = L.divIcon({
-            className: 'plane-icon',
-            html: '✈️',
-            iconSize: [60, 60],
-            iconAnchor: [30, 30] // 中心を基準に回転
+        // 3. 飛行機アイコン（画像を使用）
+        const planeIcon = L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/2972/2972185.png', // 飛行機の画像URL
+            iconSize: [50, 50],  // サイズを調整
+            iconAnchor: [25, 25]  // 回転の中心
         });
 
-        // 4. 飛行機マーカー
-        const planeMarker = L.marker(routes[0].from, { icon: planeIcon }).addTo(map);
+        // 4. 飛行機マーカー（初期位置は成田）
+        const planeMarker = L.marker(routes[0].from, { icon: planeIcon, rotationAngle: 0 }).addTo(map);
 
         // 5. 飛行機の軌跡をリアルタイムで表示
         let currentPath = [];
@@ -241,7 +235,7 @@
 
             // 進行方向の角度を計算してアイコンを回転
             const angle = Math.atan2(to[0] - from[0], to[1] - from[1]) * (180 / Math.PI);
-            document.querySelector('.plane-icon').style.transform = `rotate(${angle}deg)`;
+            planeMarker.setRotationAngle(angle); // 回転を適用
 
             progress += 0.005; // 速度調整
 
@@ -259,6 +253,7 @@
     </script>
 </body>
 </html>
+
 
 
 
