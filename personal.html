@@ -312,5 +312,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </center></p>
 <a href="index.html">TOPに戻る</a>
 </div>
+    <!-- データレイヤー送信スクリプト -->
+  <script>
+    document.getElementById("twitter-share-button").addEventListener("click", function () {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "share_click",
+        platform: "twitter",
+        page_url: window.location.href,
+      });
+    });
+  </script>
 </body>
 </html>
